@@ -9,31 +9,27 @@ def normalise_ascii_input(ascii_input)
 end
 
 def caesar_cipher(message, shift_by)
-  # May need seperate if statements for if the letter is in upper case or lower case,
-  # then adjust the calculation accordingly.
-
   message_ciphered = [] # Initialise the message_ciphered array as an empty array.
-
   message_array = message.split('') # Convert the string into an array, split by character.
 
   # Iterate over each character from the provided string.
   message_array.each do |substring|
     if substring.match?(/[A-Za-z]/)
-      substring_ascii_number = substring.ord
-      normalised_ascii_number = normalise_ascii_input(substring_ascii_number)
+      substring_ascii_number = substring.ord # Get the ascii number for the current character
+      normalised_ascii_number = normalise_ascii_input(substring_ascii_number) # Convert the ascii number to a 0..25 range.
       shifted_number = (normalised_ascii_number + shift_by) % 26 # Always modulo by 26 to ensure wrapping with any number
-      shifted_number += 26 if shifted_number < 0
+      shifted_number += 26 if shifted_number < 0 # Attempt to wrap back around if the above modulo returns less than 0. Currently not working as intended.
 
-      # Convert the normalised values back to their
+      # Convert the normalised values back to ASCII numbers.
       if ("A".ord.."Z".ord).include?(substring_ascii_number)
         shifted_number += "A".ord
       elsif ("a".ord.."z".ord).include?(substring_ascii_number)
         shifted_number += "a".ord
       end
 
-      message_ciphered.push(shifted_number.chr)
+      message_ciphered.push(shifted_number.chr) # Conver the shifted_number back to a character and push it to the final array.
     else
-      message_ciphered.push(substring)
+      message_ciphered.push(substring) # Push characters that are not alphabetical, like spaces, symbols, etc, and push them to the array unmodified.
     end
   end
   return message_ciphered.join # output the final string to the console, joining the elements.
