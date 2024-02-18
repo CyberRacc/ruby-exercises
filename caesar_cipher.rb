@@ -8,6 +8,7 @@ def caesar_cipher(message, shift_by)
   message_array = message.split('') # Convert the string into an array, split by character.
 
   message_array.each do |substring|
+
     if substring.match?(/[A-Za-z]/) # If the substring is alphabetical
       message_ciphered.push((substring.ord + shift_by).chr)
       # If the final value of substring.ord + shift_by is greater than 26
@@ -15,8 +16,11 @@ def caesar_cipher(message, shift_by)
     else
       message_ciphered.push(substring) # If not alphabetical, i.e. spaces, etc. Push withou modification
     end
+
   end
+
   puts message_ciphered.join # output the final string to the console, joining the elements.
+
 end
 
 caesar_cipher("test", 5)
